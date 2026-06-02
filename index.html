@@ -333,6 +333,36 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
+    .inline-metrics {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+
+    .inline-metric {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .inline-metric-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--green);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .inline-metric-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
     .timeline-stack {
       display: flex;
       flex-wrap: wrap;
@@ -501,6 +531,78 @@
       font-size: 0.8rem;
     }
 
+    /* ROADMAP DIAGRAM */
+    .roadmap-diagram {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: stretch;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .roadmap-arrow {
+      font-size: 1.5rem;
+      color: var(--border);
+      padding: 0 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .roadmap-node {
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .roadmap-node.current {
+      border-color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .roadmap-node.next {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .roadmap-node-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .roadmap-node.current .roadmap-node-label { color: var(--green); }
+    .roadmap-node.next .roadmap-node-label { color: var(--accent); }
+
+    .roadmap-node-title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.4rem;
+    }
+
+    .roadmap-node-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 640px) {
+      .roadmap-diagram {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .roadmap-arrow {
+        text-align: center;
+        transform: rotate(90deg);
+        padding: 0.25rem 0;
+      }
+    }
+
     .divider {
       border: none;
       border-top: 1px solid var(--border);
@@ -521,7 +623,6 @@
     <span class="nav-logo">lucasrampoldi.dev</span>
     <ul class="nav-links">
       <li><a href="#roadmap">Roadmap</a></li>
-      <li><a href="#impacto">Impacto</a></li>
       <li><a href="#experiencia">Experiencia</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contacto">Contacto</a></li>
@@ -542,7 +643,7 @@
       <span class="badge">$ FinOps Certified Practitioner</span>
     </div>
     <div class="hero-cta">
-      <a href="#impacto" class="btn btn-primary">Ver impacto →</a>
+      <a href="#experiencia" class="btn btn-primary">Ver experiencia →</a>
       <a href="#contacto" class="btn btn-outline">Contactar</a>
     </div>
   </div>
@@ -552,56 +653,27 @@
   <!-- ROADMAP -->
   <section id="roadmap">
     <p class="section-label">// hacia dónde voy</p>
-    <h2 class="section-title">Próximos pasos</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
-      <div class="metric-card">
-        <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">⎈</div>
-        <div style="font-weight: 600; margin-bottom: 0.5rem;">Lead de Platform / DevOps</div>
-        <p style="font-size: 0.875rem; color: var(--text-dim); line-height: 1.6;">Liderar equipos de plataforma que potencien a decenas de engineers, estableciendo estándares, reduciendo fricción y haciendo el trabajo de infra invisible cuando funciona bien.</p>
+    <h2 class="section-title">Roadmap</h2>
+
+    <div class="roadmap-diagram">
+      <div class="roadmap-node current">
+        <div class="roadmap-node-label">Hoy</div>
+        <div class="roadmap-node-title">Platform Engineer</div>
+        <div class="roadmap-node-sub">Civitatis · 2024→</div>
       </div>
-      <div class="metric-card">
-        <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">☁</div>
-        <div style="font-weight: 600; margin-bottom: 0.5rem;">Lead de Arquitectura Cloud</div>
-        <p style="font-size: 0.875rem; color: var(--text-dim); line-height: 1.6;">Tomar decisiones de arquitectura con foco en escalabilidad, costo y operabilidad. Ayudar a organizaciones a crecer su infraestructura sin crecer su complejidad operativa.</p>
+      <div class="roadmap-arrow">→</div>
+      <div class="roadmap-node next">
+        <div class="roadmap-node-label">Próximo</div>
+        <div class="roadmap-node-title">Lead de Platform<br/>o DevOps</div>
+        <div class="roadmap-node-sub">Liderar equipos de infra</div>
       </div>
-      <div class="metric-card">
-        <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">$</div>
-        <div style="font-weight: 600; margin-bottom: 0.5rem;">FinOps & Cost Strategy</div>
-        <p style="font-size: 0.875rem; color: var(--text-dim); line-height: 1.6;">Conectar decisiones técnicas con impacto financiero real. No solo reducir costos, sino hacer que cada decisión de infra sea consciente de su costo/beneficio para el negocio.</p>
+      <div class="roadmap-arrow">→</div>
+      <div class="roadmap-node future">
+        <div class="roadmap-node-label">Visión</div>
+        <div class="roadmap-node-title">Lead de Arquitectura<br/>& FinOps</div>
+        <div class="roadmap-node-sub">Decisiones técnicas + impacto de negocio</div>
       </div>
     </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- IMPACTO -->
-  <section id="impacto">
-    <p class="section-label">// métricas de impacto</p>
-    <h2 class="section-title">Lo que muevo</h2>
-
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <div class="metric-value">–?%</div>
-        <div class="metric-label">Reducción en tiempo de deploy</div>
-        <div class="metric-delta">midiendo desde 2024 →</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">+?</div>
-        <div class="metric-label">Servicios integrados en plataforma</div>
-        <div class="metric-delta">onboarding guiado y estandarizado</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">–?%</div>
-        <div class="metric-label">Reducción de costos cloud</div>
-        <div class="metric-delta">rightsizing + recursos sin uso</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">15+</div>
-        <div class="metric-label">Años en infraestructura</div>
-        <div class="metric-delta">redes → cloud → platform engineering</div>
-      </div>
-    </div>
-    <p class="metrics-note">Métricas en construcción — midiendo activamente desde 2024.</p>
   </section>
 
   <hr class="divider" />
@@ -624,12 +696,41 @@
           y hacer que el trabajo de infra sea invisible cuando funciona bien.
         </p>
         <ul class="impact-list">
-          <li>Definí estándares de infraestructura y despliegue para ordenar cómo trabajan los equipos y reducir errores en releases</li>
-          <li>Automaticé procesos repetitivos de deploys, validaciones y configuraciones, reduciendo trabajo manual y tiempos de entrega</li>
-          <li>Armé templates y patrones reutilizables para Kubernetes y CI/CD, logrando entornos más consistentes y menos incidencias</li>
-          <li>Diseñé dashboards de estabilidad y performance para identificar dónde escalar y dónde optimizar</li>
-          <li>Optimicé costos de infraestructura mediante rightsizing y eliminación de recursos sin uso en Kubernetes y cloud</li>
+          <li>Diseñé y lideré la estrategia de migración de 300+ repos de Bitbucket a GitHub — reconectando todos los pipelines CI/CD, hooks y credenciales sin interrumpir el trabajo de los equipos</li>
+          <li>Definí el estándar de despliegue de la compañía y lideré la adopción: +70 integraciones migradas al Helm chart interno, eliminando inconsistencias entre servicios</li>
+          <li>Diseñé la arquitectura completa de n8n — IAM, RBAC integrado con Google Workspace, estrategia de red y webhooks — operándola en 4 entornos para múltiples equipos</li>
+          <li>Construí la plataforma de datos desde cero: decidí la arquitectura, desplegué Airbyte en GCP y establecí los pipelines CDC de replicación hacia BigQuery</li>
+          <li>Diagnostiqué la causa raíz de una crisis de 3.300+ errores en producción (Cloud NAT port drain), decidí el approach arquitectónico e implementé ProxySQL como sidecar — resolviendo el problema de forma permanente en múltiples servicios</li>
+          <li>Rediseñé el sistema de builds Docker en Kubernetes con Kaniko — bajé el tiempo de build de 39 min a 26 min y eliminé credenciales estáticas migrando a Workload Identity</li>
+          <li>Centralicé toda la autenticación cluster↔GCP IAM en Terraform con Workload Identity, eliminando credenciales estáticas y estableciendo un modelo de seguridad reproducible</li>
+          <li>Diseñé un sistema de auto-remediación con 5 flujos autónomos (OOMKill, DB down, SSH failures) que reducen la intervención manual en incidentes recurrentes</li>
+          <li>Fui dueño del Helm chart interno — lo evolué a través de 10+ versiones tomando decisiones de diseño que afectaron a todos los servicios de la compañía</li>
+          <li>Diseñé y construí el cluster de producción pro-v2 desde cero — arquitectura de red completa: subnets, rangos IP, Cloud NAT, nodepools y políticas de firewall — y lideré la migración de todos los servicios del cluster anterior sin downtime</li>
+          <li>Definí la estrategia de disaster recovery con Velero — backups automáticos por namespace en todos los clusters como política por defecto</li>
+          <li>Reduje costos de infraestructura eliminando recursos huérfanos, ajustando capacidad con rightsizing y dando de baja servicios y discos sin uso tras la migración al nuevo cluster</li>
         </ul>
+        <div class="inline-metrics">
+          <div class="inline-metric">
+            <span class="inline-metric-value">300+</span>
+            <span class="inline-metric-label">repos migrados a GitHub</span>
+          </div>
+          <div class="inline-metric">
+            <span class="inline-metric-value">70+</span>
+            <span class="inline-metric-label">integraciones migradas a Helm</span>
+          </div>
+          <div class="inline-metric">
+            <span class="inline-metric-value">5</span>
+            <span class="inline-metric-label">flujos de auto-remediación</span>
+          </div>
+          <div class="inline-metric">
+            <span class="inline-metric-value">4</span>
+            <span class="inline-metric-label">squads habilitados con n8n</span>
+          </div>
+          <div class="inline-metric">
+            <span class="inline-metric-value">350+</span>
+            <span class="inline-metric-label">iniciativas ejecutadas en 2 años</span>
+          </div>
+        </div>
         <div class="timeline-stack">
           <span class="stack-tag">GCP</span>
           <span class="stack-tag">Kubernetes</span>
@@ -656,7 +757,19 @@
           <li>Armé pipelines de CI/CD con GitHub Actions, CircleCI y Jenkins, junto con Terraform y CloudFormation</li>
           <li>Implementé observabilidad con DataDog, ELK, Prometheus y Grafana para detectar problemas antes que los usuarios</li>
           <li>Trabajé en optimización de costos ajustando arquitecturas y eliminando gasto innecesario</li>
+          <li>Construí el equipo: definí el perfil, tomé las entrevistas y decidí las incorporaciones</li>
+          <li>Gestioné el ciclo de feedback del equipo: reuniones de status, evaluaciones y desarrollo de los contributors</li>
         </ul>
+        <div class="inline-metrics">
+          <div class="inline-metric">
+            <span class="inline-metric-value">+?</span>
+            <span class="inline-metric-label">clientes atendidos</span>
+          </div>
+          <div class="inline-metric">
+            <span class="inline-metric-value">–?%</span>
+            <span class="inline-metric-label">reducción de costos</span>
+          </div>
+        </div>
         <div class="timeline-stack">
           <span class="stack-tag">AWS</span>
           <span class="stack-tag">Lambda</span>
@@ -706,6 +819,8 @@
           <li>Lideré el equipo de infra sin título formal tras la salida del lead</li>
           <li>Onboarding y mentoría del nuevo integrante del equipo</li>
           <li>Tomé decisiones de arquitectura y priorización de forma autónoma</li>
+          <li>Construí el equipo: definí el perfil, tomé las entrevistas y decidí las incorporaciones</li>
+          <li>Gestioné reuniones de status y feedback con los contributors del equipo</li>
         </ul>
       </div>
 
@@ -910,7 +1025,7 @@
       <p>Abierto a conversaciones sobre platform engineering, arquitectura cloud, FinOps y cómo hacer que los equipos de producto vayan más rápido.</p>
       <div class="contact-links">
         <a href="mailto:lucas@rampoldi.com.ar" class="btn btn-primary">lucas@rampoldi.com.ar</a>
-        <a href="https://linkedin.com/in/lucasrampoldi" class="btn btn-outline" target="_blank">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/lucas-rampoldi/" class="btn btn-outline" target="_blank">LinkedIn</a>
         <a href="https://github.com/lucasrampoldi" class="btn btn-outline" target="_blank">GitHub</a>
       </div>
     </div>
