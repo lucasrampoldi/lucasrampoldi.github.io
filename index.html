@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucas Rampoldi — Cloud Architect & Platform Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8f9fb;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f3f8;
+      --border: #e4e7ef;
+      --accent: #5b5bd6;
+      --accent-soft: #ebebff;
+      --green: #16a34a;
+      --green-soft: #dcfce7;
+      --text: #0f1117;
+      --text-muted: #8b8fa8;
+      --text-dim: #4b5063;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(248, 249, 251, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero-desc {
+      font-size: 1.125rem;
+      color: var(--text-dim);
+      max-width: 580px;
+      margin-bottom: 2rem;
+      line-height: 1.75;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--accent-soft);
+      color: var(--accent);
+      background: rgba(124, 106, 247, 0.08);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #9080ff; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover { border-color: var(--accent); color: var(--text); }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+
+    /* IMPACT METRICS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: all 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .metric-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(91,91,214,0.1);
+    }
+
+    .metric-value {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--green);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-label {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .metric-delta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--green);
+      margin-top: 0.5rem;
+    }
+
+    .metrics-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    /* EXPERIENCE TIMELINE */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3rem;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.375rem;
+      top: 0.4rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .timeline-dot.current {
+      background: var(--green);
+      box-shadow: 0 0 0 3px var(--green-soft);
+    }
+
+    .timeline-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .timeline-role {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-company {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-desc {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .impact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .impact-list li {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .impact-list li::before {
+      content: '→';
+      color: var(--green);
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .timeline-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .stack-tag {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-group {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .skill-group-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* CERTS */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .cert-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .cert-icon {
+      font-size: 1.75rem;
+      flex-shrink: 0;
+    }
+
+    .cert-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .cert-issuer {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* EDUCATION */
+    .edu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .edu-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .edu-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .edu-school {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .edu-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* CONTACT */
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .contact-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-card p {
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem; }
+      .nav-links { gap: 1rem; }
+      .hero { padding: 5rem 1rem 3rem; }
+      section { padding: 3rem 1rem; }
+      .edu-item { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">lucasrampoldi.dev</span>
+    <ul class="nav-links">
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#impacto">Impacto</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-tag">// Cloud Architect · Platform Engineer · FinOps</p>
+    <h1>Lucas<br /><span>Rampoldi</span></h1>
+    <p class="hero-desc">
+      Más de 15 años construyendo infraestructura que escala. Hoy me enfoco en plataformas internas
+      que permiten a los equipos de producto moverse más rápido, con menos fricción y
+      costos bajo control.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">⎈ CKA — Certified Kubernetes Administrator</span>
+      <span class="badge">$ FinOps Certified Practitioner</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#impacto" class="btn btn-primary">Ver impacto →</a>
+      <a href="#contacto" class="btn btn-outline">Contactar</a>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ROADMAP -->
+  <section id="roadmap">
+    <p class="section-label">// hacia dónde voy</p>
+    <h2 class="section-title">Próximos pasos</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+      <div class="metric-card">
+        <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">⎈</div>
+        <div style="font-weight: 600; margin-bottom: 0.5rem;">Lead de Platform / DevOps</div>
+        <p style="font-size: 0.875rem; color: var(--text-dim); line-height: 1.6;">Liderar equipos de plataforma que potencien a decenas de engineers, estableciendo estándares, reduciendo fricción y haciendo el trabajo de infra invisible cuando funciona bien.</p>
+      </div>
+      <div class="metric-card">
+        <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">☁</div>
+        <div style="font-weight: 600; margin-bottom: 0.5rem;">Lead de Arquitectura Cloud</div>
+        <p style="font-size: 0.875rem; color: var(--text-dim); line-height: 1.6;">Tomar decisiones de arquitectura con foco en escalabilidad, costo y operabilidad. Ayudar a organizaciones a crecer su infraestructura sin crecer su complejidad operativa.</p>
+      </div>
+      <div class="metric-card">
+        <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">$</div>
+        <div style="font-weight: 600; margin-bottom: 0.5rem;">FinOps & Cost Strategy</div>
+        <p style="font-size: 0.875rem; color: var(--text-dim); line-height: 1.6;">Conectar decisiones técnicas con impacto financiero real. No solo reducir costos, sino hacer que cada decisión de infra sea consciente de su costo/beneficio para el negocio.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- IMPACTO -->
+  <section id="impacto">
+    <p class="section-label">// métricas de impacto</p>
+    <h2 class="section-title">Lo que muevo</h2>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value">–?%</div>
+        <div class="metric-label">Reducción en tiempo de deploy</div>
+        <div class="metric-delta">midiendo desde 2024 →</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">+?</div>
+        <div class="metric-label">Servicios integrados en plataforma</div>
+        <div class="metric-delta">onboarding guiado y estandarizado</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">–?%</div>
+        <div class="metric-label">Reducción de costos cloud</div>
+        <div class="metric-delta">rightsizing + recursos sin uso</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">15+</div>
+        <div class="metric-label">Años en infraestructura</div>
+        <div class="metric-delta">redes → cloud → platform engineering</div>
+      </div>
+    </div>
+    <p class="metrics-note">Métricas en construcción — midiendo activamente desde 2024.</p>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- EXPERIENCIA -->
+  <section id="experiencia">
+    <p class="section-label">// trayectoria</p>
+    <h2 class="section-title">Experiencia</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot current"></div>
+        <div class="timeline-date">Feb 2024 — Actualidad · 2 años</div>
+        <div class="timeline-role">Platform Engineer</div>
+        <div class="timeline-company">Civitatis</div>
+        <p class="timeline-desc">
+          Defino y mantengo la plataforma interna que estandariza cómo los equipos construyen,
+          despliegan y operan servicios. Mi foco es reducir fricción, evitar errores en releases
+          y hacer que el trabajo de infra sea invisible cuando funciona bien.
+        </p>
+        <ul class="impact-list">
+          <li>Definí estándares de infraestructura y despliegue para ordenar cómo trabajan los equipos y reducir errores en releases</li>
+          <li>Automaticé procesos repetitivos de deploys, validaciones y configuraciones, reduciendo trabajo manual y tiempos de entrega</li>
+          <li>Armé templates y patrones reutilizables para Kubernetes y CI/CD, logrando entornos más consistentes y menos incidencias</li>
+          <li>Diseñé dashboards de estabilidad y performance para identificar dónde escalar y dónde optimizar</li>
+          <li>Optimicé costos de infraestructura mediante rightsizing y eliminación de recursos sin uso en Kubernetes y cloud</li>
+        </ul>
+        <div class="timeline-stack">
+          <span class="stack-tag">GCP</span>
+          <span class="stack-tag">Kubernetes</span>
+          <span class="stack-tag">Helm</span>
+          <span class="stack-tag">Jenkins</span>
+          <span class="stack-tag">Terraform</span>
+          <span class="stack-tag">Grafana</span>
+          <span class="stack-tag">Elasticsearch</span>
+          <span class="stack-tag">FinOps</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Nov 2021 — Feb 2024 · 2 años 4 meses</div>
+        <div class="timeline-role">DevOps Lead · Technical Lead · Cloud Architect · Cost Management</div>
+        <div class="timeline-company">Making Sense LLC</div>
+        <p class="timeline-desc">
+          Lideré decisiones de arquitectura cloud y prácticas DevOps para múltiples proyectos,
+          eligiendo entre serverless o contenedores según el caso y manteniendo costos bajo control.
+        </p>
+        <ul class="impact-list">
+          <li>Diseñé soluciones en AWS con Lambda, ECS, DynamoDB y API Gateway adaptando el approach a cada cliente</li>
+          <li>Armé pipelines de CI/CD con GitHub Actions, CircleCI y Jenkins, junto con Terraform y CloudFormation</li>
+          <li>Implementé observabilidad con DataDog, ELK, Prometheus y Grafana para detectar problemas antes que los usuarios</li>
+          <li>Trabajé en optimización de costos ajustando arquitecturas y eliminando gasto innecesario</li>
+        </ul>
+        <div class="timeline-stack">
+          <span class="stack-tag">AWS</span>
+          <span class="stack-tag">Lambda</span>
+          <span class="stack-tag">ECS</span>
+          <span class="stack-tag">EKS</span>
+          <span class="stack-tag">Terraform</span>
+          <span class="stack-tag">GitHub Actions</span>
+          <span class="stack-tag">DataDog</span>
+          <span class="stack-tag">Prometheus</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Feb 2021 — Nov 2021 · 10 meses</div>
+        <div class="timeline-role">Cloud Security Engineer</div>
+        <div class="timeline-company">Wildlife Studios</div>
+        <p class="timeline-desc">
+          Mejoré los procesos de incident response y seguridad cloud en un entorno de alta escala (gaming).
+        </p>
+        <ul class="impact-list">
+          <li>Armé playbooks de incident response para resolver incidentes más rápido y de forma ordenada</li>
+          <li>Integré validaciones de seguridad con OPA en pipelines de GitLab para bloquear configuraciones inseguras</li>
+          <li>Implementé auditoría en Kubernetes con Falco para detectar comportamientos anómalos en runtime</li>
+          <li>Automaticé alertas con enriquecimiento automático para reducir ruido y mejorar la gestión de incidentes</li>
+        </ul>
+        <div class="timeline-stack">
+          <span class="stack-tag">AWS</span>
+          <span class="stack-tag">GuardDuty</span>
+          <span class="stack-tag">OPA</span>
+          <span class="stack-tag">Falco</span>
+          <span class="stack-tag">DataDog</span>
+          <span class="stack-tag">GitLab</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Ago 2020 — Feb 2021 · 6 meses</div>
+        <div class="timeline-role">DevOps Lead</div>
+        <div class="timeline-company">iúnigo</div>
+        <p class="timeline-desc">
+          Al irse el lead del equipo, quedé a cargo de la infraestructura y lideré la incorporación
+          de un nuevo integrante, tomando decisiones técnicas y de priorización de forma autónoma.
+        </p>
+        <ul class="impact-list">
+          <li>Lideré el equipo de infra sin título formal tras la salida del lead</li>
+          <li>Onboarding y mentoría del nuevo integrante del equipo</li>
+          <li>Tomé decisiones de arquitectura y priorización de forma autónoma</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Feb 2020 — Ago 2020 · 6 meses</div>
+        <div class="timeline-role">DevOps Engineer</div>
+        <div class="timeline-company">iúnigo</div>
+        <p class="timeline-desc">
+          Construí la base de CI/CD y observabilidad de la compañía, aplicando GitOps y herramientas
+          de HashiCorp para tener infraestructura reproducible y versionada.
+        </p>
+        <ul class="impact-list">
+          <li>Armé y mantuve pipelines de CI/CD con GitHub Actions y Travis, automatizando deploys</li>
+          <li>Implementé GitOps con Terraform y GitHub Actions para manejar infraestructura como código</li>
+          <li>Usé Nomad, Consul y Vault para orquestación, service discovery y gestión de secretos</li>
+          <li>Desarrollé herramientas internas en Python, Go y Java para automatizar tareas operativas</li>
+        </ul>
+        <div class="timeline-stack">
+          <span class="stack-tag">Kubernetes</span>
+          <span class="stack-tag">Terraform</span>
+          <span class="stack-tag">Vault</span>
+          <span class="stack-tag">Consul</span>
+          <span class="stack-tag">Grafana</span>
+          <span class="stack-tag">Airflow</span>
+          <span class="stack-tag">Go</span>
+          <span class="stack-tag">Python</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Ene 2019 — Feb 2020 · 1 año 2 meses</div>
+        <div class="timeline-role">DevOps Engineer</div>
+        <div class="timeline-company">Banco Mariva</div>
+        <p class="timeline-desc">
+          Migré infraestructura bancaria a cloud, construyendo las primeras pipelines de CI/CD
+          y automatizando el aprovisionamiento con Terraform en entornos multi-país.
+        </p>
+        <ul class="impact-list">
+          <li>Implementé infraestructura en AWS (EC2, S3, CloudFront, ELB, VPC, RDS, Lambda)</li>
+          <li>Automaticé provisión con Terraform en AWS y GCP, mejorando reproducibilidad</li>
+          <li>Containerizé aplicaciones con Docker y construí pipelines Jenkins+Git</li>
+        </ul>
+        <div class="timeline-stack">
+          <span class="stack-tag">AWS</span>
+          <span class="stack-tag">GCP</span>
+          <span class="stack-tag">Terraform</span>
+          <span class="stack-tag">Jenkins</span>
+          <span class="stack-tag">Docker</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Mar 2013 — Feb 2020 · 7 años</div>
+        <div class="timeline-role">Administrador de Redes & Infraestructura</div>
+        <div class="timeline-company">Banco Mariva</div>
+        <p class="timeline-desc">
+          Responsable de la infraestructura core del banco: redes corporativas multi-sede,
+          seguridad perimetral, conectividad híbrida on-premise/cloud y alta disponibilidad.
+        </p>
+        <ul class="impact-list">
+          <li>Administré redes corporativas Cisco (switches, routers, firewalls ASA con Firepower) en Argentina, Uruguay, Bahamas y EEUU</li>
+          <li>Configuré conectividad híbrida con VPN y Direct Connect entre on-premise y AWS/GCP</li>
+          <li>Gestioné infraestructura de alta disponibilidad con sitios de contingencia y failover</li>
+        </ul>
+        <div class="timeline-stack">
+          <span class="stack-tag">Cisco</span>
+          <span class="stack-tag">ASA/Firepower</span>
+          <span class="stack-tag">AWS Direct Connect</span>
+          <span class="stack-tag">VPN</span>
+          <span class="stack-tag">Nagios</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">// stack técnico</p>
+    <h2 class="section-title">Skills</h2>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & Infra</div>
+        <div class="skill-tags">
+          <span class="skill-tag">GCP</span>
+          <span class="skill-tag">AWS</span>
+          <span class="skill-tag">Kubernetes</span>
+          <span class="skill-tag">Terraform</span>
+          <span class="skill-tag">Helm</span>
+          <span class="skill-tag">Docker</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">CI/CD & Plataforma</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Jenkins</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">CircleCI</span>
+          <span class="skill-tag">GitOps</span>
+          <span class="skill-tag">Fastly</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Observabilidad</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Grafana</span>
+          <span class="skill-tag">Prometheus</span>
+          <span class="skill-tag">Loki</span>
+          <span class="skill-tag">Elasticsearch</span>
+          <span class="skill-tag">DataDog</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Seguridad</div>
+        <div class="skill-tags">
+          <span class="skill-tag">OPA</span>
+          <span class="skill-tag">Falco</span>
+          <span class="skill-tag">GuardDuty</span>
+          <span class="skill-tag">Vault</span>
+          <span class="skill-tag">AWS Config</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Lenguajes</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Go</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Java</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">FinOps & Cost</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Rightsizing</span>
+          <span class="skill-tag">Chargeback</span>
+          <span class="skill-tag">Cost Allocation</span>
+          <span class="skill-tag">Cloud Optimization</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTS -->
+    <h3 style="font-size:1.1rem; font-weight:600; margin: 3rem 0 1.25rem; color: var(--text-dim);">Certificaciones</h3>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">⎈</div>
+        <div>
+          <div class="cert-name">Certified Kubernetes Administrator</div>
+          <div class="cert-issuer">CNCF · CKA</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">$</div>
+        <div>
+          <div class="cert-name">FinOps Certified Practitioner</div>
+          <div class="cert-issuer">FinOps Foundation</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">⬡</div>
+        <div>
+          <div class="cert-name">CCNP Switch</div>
+          <div class="cert-issuer">Cisco Networking Academy · 2018</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCACIÓN -->
+    <h3 style="font-size:1.1rem; font-weight:600; margin: 1rem 0 1.25rem; color: var(--text-dim);">Educación</h3>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div>
+          <div class="edu-title">Licenciatura en Sistemas de Información</div>
+          <div class="edu-school">Universidad del Salvador</div>
+        </div>
+        <div class="edu-year">2012 – 2018</div>
+      </div>
+      <div class="edu-item">
+        <div>
+          <div class="edu-title">Especialista Universitario en Seguridad Informática</div>
+          <div class="edu-school">UTN FRBA · Centro de e-Learning</div>
+        </div>
+        <div class="edu-year">2013</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="contact-card">
+      <h3>¿Hablamos?</h3>
+      <p>Abierto a conversaciones sobre platform engineering, arquitectura cloud, FinOps y cómo hacer que los equipos de producto vayan más rápido.</p>
+      <div class="contact-links">
+        <a href="mailto:lucas@rampoldi.com.ar" class="btn btn-primary">lucas@rampoldi.com.ar</a>
+        <a href="https://linkedin.com/in/lucasrampoldi" class="btn btn-outline" target="_blank">LinkedIn</a>
+        <a href="https://github.com/lucasrampoldi" class="btn btn-outline" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Lucas Rampoldi · Platform Engineer · Buenos Aires</p>
+  </footer>
+
+</body>
+</html>
